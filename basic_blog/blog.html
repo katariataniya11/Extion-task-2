@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Blog Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        nav {
+            background: #444;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .post-form, .comment-section {
+            margin-top: 20px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .post-form input, .post-form textarea, .comment-section input, .comment-section textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+        }
+        .post-form button, .comment-section button {
+            padding: 10px 20px;
+            background: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        article {
+            margin-top: 20px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        article h2 {
+            margin-top: 0;
+        }
+        article p {
+            color: #666;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+        .tags {
+            background-color: #e4e4e4;
+            padding: 5px;
+            display: inline-block;
+            margin-top: 10px;
+            color: #333;
+            font-size: 0.9em;
+        }
+        .comments {
+            margin-top: 20px;
+        }
+        .comments div {
+            background: #f4f4f4;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 5px solid #444;
+        }
+        .comments p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>My Simple Blog</h1>
+    </header>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <div class="container">
+        <div class="post-form">
+            <h2>Create a New Post</h2>
+            <input type="text" id="post-title" placeholder="Post Title">
+            <textarea id="post-content" placeholder="Post Content"></textarea>
+            <input type="text" id="post-tags" placeholder="Tags (comma-separated)">
+            <button onclick="createPost()">Submit Post</button>
+        </div>
+
+        <div id="posts-container">
+            <!-- Existing posts will appear here -->
+        </div>
+
+        <div class="comment-section">
+            <h3>Leave a Comment</h3>
+            <input type="text" id="name" placeholder="Your Name">
+            <textarea id="comment" placeholder="Your Comment"></textarea>
+            <button onclick="postComment()">Submit Comment</button>
+        </div>
+
+        <div class="comments">
+            <h3>Comments</h3>
+            <div>
+                <p><strong>John Doe:</strong></p>
+                <p>This is a very informative post. Thanks for sharing!</p>
+            </div>
+            <div>
+                <p><strong>Jane Doe:</strong></p>
+                <p>I enjoyed reading this. Keep up the good work!</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>My Simple Blog &copy; 2024</p>
+    </footer>
+
+    <script>
+        function createPost() {
+            const title = document.getElementById('post-title').value;
+            const content = document.getElementById('post-content').value;
+            const tags = document.getElementById('post-tags').value;
+
+            if (title && content) {
+                const postsContainer = document.getElementById('posts-container');
+                const newPost = document.createElement('article');
+
+                const postTitle = document.createElement('h2');
+                postTitle.textContent = title;
+                const postContent = document.createElement('p');
+                postContent.textContent = content;
+                const postTags = document.createElement('p');
+                postTags.className = 'tags';
+                postTags.textContent = 'Tags: ' + tags.split(',').map(tag => `#${tag.trim()}`).join(' ');
+
+                newPost.appendChild(postTitle);
+                newPost.appendChild(postContent);
+                newPost.appendChild(postTags);
+
+                postsContainer.appendChild(newPost);
+
+                // Clear the input fields
+                document.getElementById('post-title').value = '';
+                document.getElementById('post-content').value = '';
+                document.getElementById('post-tags').value = '';
+            } else {
+                alert("Please fill in the title and content.");
+            }
+        }
+
+        function postComment() {
+            const name = document.getElementById('name').value;
+            const comment = document.getElementById('comment').value;
+
+            if (name && comment) {
+                const commentsDiv = document.querySelector('.comments');
+                const newComment = document.createElement('div');
+
+                const namePara = document.createElement('p');
+                namePara.innerHTML = `<strong>${name}:</strong>`;
+                const commentPara = document.createElement('p');
+                commentPara.textContent = comment;
+
+                newComment.appendChild(namePara);
+                newComment.appendChild(commentPara);
+
+                commentsDiv.appendChild(newComment);
+
+                // Clear the input fields
+                document.getElementById('name').value = '';
+                document.getElementById('comment').value = '';
+            } else {
+                alert("Please fill in both fields.");
+            }
+        }
+    </script>
+
+</body>
+</html>
